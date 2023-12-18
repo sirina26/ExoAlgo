@@ -51,13 +51,38 @@ public class DefaultTeam {
       return null;
     }
 
-    Point center=points.get(0);
-    int radius=100;
+    Point center = points.get(0);
+    double maxDistanceSquared = 0;
 
-    /*******************
-     * PARTIE A ECRIRE *
-     *******************/
+    for (int i = 0; i < points.size() - 1; i++) {
+      for (int j = i + 1; j < points.size(); j++) {
+        Point pointA = points.get(i);
+        Point pointB = points.get(j);
 
-    return new Circle(center,radius);
+        double distanceSquared = calculateDistanceSquared(pointA, pointB);
+
+        if (distanceSquared > maxDistanceSquared) {
+          maxDistanceSquared = distanceSquared;
+          center = calculateMidpoint(pointA, pointB);
+        }
+      }
+    }
+
+    int radius = (int) Math.sqrt(maxDistanceSquared) / 2;
+
+    return new Circle(center, radius);
   }
+
+  private double calculateDistanceSquared(Point a, Point b) {
+    int deltaX = (int) (a.getX() - b.getX());
+    int deltaY = (int) (a.getY() - b.getY());
+    return deltaX * deltaX + deltaY * deltaY;
+  }
+
+  private Point calculateMidpoint(Point a, Point b) {
+    int midX = (int) ((a.getX() + b.getX()) / 2);
+    int midY = (int) (a.getY() + b.getY()) / 2;
+    return new Point(midX, midY);
+  }
+
 }
