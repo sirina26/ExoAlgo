@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="supportGUI">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/TME1_ado23cpa/jars/supportGUI.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
