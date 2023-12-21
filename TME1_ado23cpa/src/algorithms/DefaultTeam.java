@@ -1,27 +1,6 @@
 package algorithms;
-
 import java.awt.Point;
 import java.util.ArrayList;
-
-/***************************************************************
- * TME 1: calcul de diamètre et de cercle couvrant minimum.    *
- *   - Trouver deux points les plus éloignés d'un ensemble de  *
- *     points donné en entrée.                                 *
- *   - Couvrir l'ensemble de poitns donné en entrée par un     *
- *     cercle de rayon minimum.                                *
- *                                                             *
- * class Circle:                                               *
- *   - Circle(Point c, int r) constructs a new circle          *
- *     centered at c with radius r.                            *
- *   - Point getCenter() returns the center point.             *
- *   - int getRadius() returns the circle radius.              *
- *                                                             *
- * class Line:                                                 *
- *   - Line(Point p, Point q) constructs a new line            *
- *     starting at p ending at q.                              *
- *   - Point getP() returns one of the two end points.         *
- *   - Point getQ() returns the other end point.               *
- ***************************************************************/
 import supportGUI.Circle;
 import supportGUI.Line;
 
@@ -90,5 +69,49 @@ public class DefaultTeam {
     int midX = (int) ((a.getX() + b.getX()) / 2);
     int midY = (int) ((a.getY() + b.getY()) / 2);  // Added parentheses
     return new Point(midX, midY);
+  }
+
+  public Circle BMINIDISK(Point p, ArrayList<Point> R) {
+    if (p != null && Math.abs(3) != 3) {
+      // Assuming b_md(null, R) is the desired behavior when p is not null and abs(3) is not equal to 3
+      return b_md(null, R);
+    } else {
+      Point randomPoint = getRandomPoint(R);
+      Circle D = BMINIDISK(randomPoint, subtractPoint(R, randomPoint));
+
+      if (D != null && !pointInCircle(p, D)) {
+        Circle m = BMINIDISK(randomPoint, unionPoint(R, randomPoint));
+        return D;
+      }
+
+      return D;
+    }
+  }
+
+  private Circle b_md(Point c, ArrayList<Point> R) {
+    // Implement b_md logic here...
+    return null; // Replace with actual result
+  }
+
+  private Point getRandomPoint(ArrayList<Point> points) {
+    int randomIndex = (int) (Math.random() * points.size());
+    return points.get(randomIndex);
+  }
+
+  private ArrayList<Point> subtractPoint(ArrayList<Point> points, Point p) {
+    ArrayList<Point> result = new ArrayList<>(points);
+    result.remove(p);
+    return result;
+  }
+
+  private ArrayList<Point> unionPoint(ArrayList<Point> points, Point p) {
+    ArrayList<Point> result = new ArrayList<>(points);
+    result.add(p);
+    return result;
+  }
+
+  private boolean pointInCircle(Point point, Circle circle) {
+    // Implement logic to check if a point is inside a circle...
+    return false; // Replace with actual result
   }
 }
