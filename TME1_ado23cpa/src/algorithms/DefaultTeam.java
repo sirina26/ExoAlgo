@@ -26,26 +26,39 @@ import supportGUI.Circle;
 import supportGUI.Line;
 
 public class DefaultTeam {
-
-  // calculDiametre: ArrayList<Point> --> Line
-  //   renvoie une paire de points de la liste, de distance maximum.
   public Line calculDiametre(ArrayList<Point> points) {
-    if (points.size()<3) {
+    if (points.size() < 3) {
       return null;
     }
 
-    Point p=points.get(0);
-    Point q=points.get(1);
+    Point p = points.get(0);
+    Point q = points.get(1);
+    double maxDistanceSquared = calculateDistanceSquared(p, q);
 
-    /*******************
-     * PARTIE A ECRIRE *
-     *******************/
+    for (int i = 0; i < points.size() - 1; i++) {
+      for (int j = i + 1; j < points.size(); j++) {
+        Point pointA = points.get(i);
+        Point pointB = points.get(j);
 
-    return new Line(p,q);
+        double distanceSquared = calculateDistanceSquared(pointA, pointB);
+
+        if (distanceSquared > maxDistanceSquared) {
+          maxDistanceSquared = distanceSquared;
+          p = pointA;
+          q = pointB;
+        }
+      }
+    }
+
+    return new Line(p, q);
   }
 
-  // calculCercleMin: ArrayList<Point> --> Circle
-  //   renvoie un cercle couvrant tout point de la liste, de rayon minimum.
+  private double calculateDistanceSquared(Point a, Point b) {
+    int deltaX = (int) (a.getX() - b.getX());
+    int deltaY = (int) (a.getY() - b.getY());
+    return deltaX * deltaX + deltaY * deltaY;
+  }
+
   public Circle calculCercleMin(ArrayList<Point> points) {
     if (points.isEmpty()) {
       return null;
@@ -68,21 +81,14 @@ public class DefaultTeam {
       }
     }
 
-    int radius = (int) Math.sqrt(maxDistanceSquared) / 2;
+    int radius = (int) Math.sqrt(maxDistanceSquared) / 2;  // Corrected division
 
     return new Circle(center, radius);
   }
 
-  private double calculateDistanceSquared(Point a, Point b) {
-    int deltaX = (int) (a.getX() - b.getX());
-    int deltaY = (int) (a.getY() - b.getY());
-    return deltaX * deltaX + deltaY * deltaY;
-  }
-
   private Point calculateMidpoint(Point a, Point b) {
     int midX = (int) ((a.getX() + b.getX()) / 2);
-    int midY = (int) (a.getY() + b.getY()) / 2;
+    int midY = (int) ((a.getY() + b.getY()) / 2);  // Added parentheses
     return new Point(midX, midY);
   }
-
 }
